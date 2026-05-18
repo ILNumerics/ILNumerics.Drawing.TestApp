@@ -4,6 +4,8 @@
 
 The application is designed to test rendering behavior on both low-level and high-level feature layers. It can be used to demonstrate and compare the software renderer and the OpenGL renderer side by side across WinForms and WPF — all within the same user interface.
 
+![ILNumerics Drawing Test App](https://raw.githubusercontent.com/ILNumerics/ILNumerics.Drawing.TestApp/refs/heads/main/VisualDrawingTestApp_Smooth.png)
+
 ## Purpose
 
 This project helps ILNumerics developers identify differences between renderer implementations and UI platforms and to ensure correctness of the rendering results - down to edge cases. A subset of available test scenes is published for demonstration purposes. 
@@ -17,7 +19,6 @@ The app allows interactive inspection of rendering output across four combinatio
 
 All test scenes can be selected interactively by the user. Each scene is rendered across all supported renderer/platform combinations, making visual differences, regressions, or platform-specific behavior easy to detect.
 
-![ILNumerics Drawing Test App](https://raw.githubusercontent.com/ILNumerics/ILNumerics.Drawing.TestApp/refs/heads/main/VisualDrawingTestApp_Smooth.png)
 ## Features
 
 - Internal test application for ILNumerics.Drawing
