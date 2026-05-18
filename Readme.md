@@ -1,14 +1,14 @@
 # ILNumerics.Drawing.TestApp
 
-`ILNumerics.Drawing.TestApp` is a visual test tool used at ILNumerics to validate and compare essential features of the ILNumerics.Drawing render engine.
+`ILNumerics.Drawing.TestApp` is a visual test tool used at ILNumerics to validate and compare essential features of the [ILNumerics.Drawing Visualization Engine](https://ilnumerics.net/visualization-engine.html).
 
-The application is designed to test rendering behavior on both low-level and high-level feature layers. It compares the software renderer and the OpenGL renderer side by side across WinForms and WPF — all within the same user interface.
+The application is designed to test rendering behavior on both low-level and high-level feature layers. It can be used to demonstrate and compare the software renderer and the OpenGL renderer side by side across WinForms and WPF â€” all within the same user interface.
 
 ## Purpose
 
-This project helps ILNumerics developers identify differences between renderer implementations and UI platforms and to ensure correctness of the rendering results - down to edge cases.
+This project helps ILNumerics developers identify differences between renderer implementations and UI platforms and to ensure correctness of the rendering results - down to edge cases. A subset of available test scenes is published for demonstration purposes. 
 
-It allows interactive inspection of rendering output across four combinations:
+The app allows interactive inspection of rendering output across four combinations:
 
 - WinForms + Software Renderer
 - WinForms + OpenGL Renderer
@@ -47,5 +47,5 @@ dotnet run
 ### License 
 MIT
 
-A runtime license of ILNumerics Visualization Engine is included with the repository.
+A runtime license of ILNumerics Visualization Engine is included with the repository and maintained up to-date by ILNumerics. Learn more: [ILNumerics free license plans](https://ilnumerics.net/licensing.html)
 
