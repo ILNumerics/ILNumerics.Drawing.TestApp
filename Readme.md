@@ -17,7 +17,7 @@ It allows interactive inspection of rendering output across four combinations:
 
 All test scenes can be selected interactively by the user. Each scene is rendered across all supported renderer/platform combinations, making visual differences, regressions, or platform-specific behavior easy to detect.
 
-![ILNumerics Drawing Test App](https://raw.githubusercontent.com/ILNumerics/ILNumerics.Drawing.TestApp/refs/heads/main/src/VisualDrawingTestApp_Smooth.png)
+![ILNumerics Drawing Test App](https://raw.githubusercontent.com/ILNumerics/ILNumerics.Drawing.TestApp/refs/heads/main/VisualDrawingTestApp_Smooth.png)
 ## Features
 
 - Internal test application for ILNumerics.Drawing
