@@ -123,7 +123,9 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
                 plotCube.Axes.YAxis.Label.Text = "y";
                 scene.Add(plotCube);
 
-                // large label in the center of the panel (screen near): target of the center picks
+                // large label in the center of the panel: target of the center picks. It must live in its own
+                // Screen2DNear group: scene.Screen has no render target set, so its content shares the depth buffer
+                // with the plot cube and grid lines / line plots crossing the center would be picked instead.
                 var center = new DLabel($"{panelName} center #{sceneNo}") {
                     Tag = CenterTag,
                     Position = new Vector3(0.5f, 0.5f, 0),
@@ -131,7 +133,7 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
                     Color = DColor.DarkBlue,
                 };
                 center.Font = new(center.Font.Name, 28f);
-                scene.Screen.Add(center);
+                scene.Add(new Group(target: RenderTarget.Screen2DNear) { center });
 
                 // hover feedback: goes through OGLControl.OnMouseMove -> InputController -> PickAt
                 center.MouseEnter += (s, a) => { center.Color = DColor.Red; center.Configure(); a.Refresh = true; };
