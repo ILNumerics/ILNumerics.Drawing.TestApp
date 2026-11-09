@@ -86,7 +86,7 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
         }
 
         private void openStressWindow_Click(object sender, RoutedEventArgs e) {
-            new WpfMultiPanelStressWindow() { Owner = this }.Show();
+            new OpenGLMultiPanelStressWindow() { Owner = this }.Show();
         }
 
         //private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {

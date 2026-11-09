@@ -30,12 +30,12 @@ All test scenes can be selected interactively by the user. Each scene is rendere
 - Interactive inspection of all renderer/platform combinations in one UI
 - Useful for detecting renderer inconsistencies and visual regressions
 
-## WPF Multi-Panel Stress
+## OpenGL Multi-Panel Stress (WPF / WinForms)
 
-The button *WPF Multi-Panel Stress* in the right sidebar opens a separate window with several WPF OpenGL panels (plots, legends, labels). It covers multi-panel scenarios which are not visible in the main window: every WPF OpenGL panel owns its own OpenGL context, while mouse picking, resizing and closing a panel happen outside of the panel's own render callback, i.e. possibly while another panel's context is current.
+The button *OpenGL Multi-Panel Stress* in the right sidebar opens a separate window with several OpenGL panels (plots, legends, labels): WPF panels, WinForms panels (hosted in `WindowsFormsHost`) or both mixed. It covers multi-panel scenarios which are not visible in the main window: every OpenGL panel owns its own OpenGL context, while mouse picking, scene changes, resizing and closing a panel happen outside of the panel's own render callback, i.e. possibly while another panel's context is current.
 
 - Move the mouse alternately over the panels (the label *center* turns red on hover, the hovered node is shown on top).
-- Use the buttons to open/close panels, replace scenes, resize and run a picking round.
+- Use the buttons to open/close panels, replace scenes, resize and run a picking round. *Neue Panels* selects the kind of panels created (mixed, WPF only, WinForms only).
 - *Auto-Stress* does all of this randomly and calls `PickAt()` directly.
 
 Pass criteria: no crash (e.g. access violation in the GL driver), *center falsch* = 0, *Exceptions* = 0.
