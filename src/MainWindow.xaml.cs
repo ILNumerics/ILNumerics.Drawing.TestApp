@@ -46,7 +46,7 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
 #if NETFRAMEWORK
             var fwvers = "net461"; 
 #else 
-            var fwvers = "net8.0-windows";
+            var fwvers = "net10.0-windows";
 #endif
             // text rendering info
             var gdiText = GDIDriver.IsGDIPlusSupported ? "Text: GDI+" : "Text: SkiaSharp"; 
