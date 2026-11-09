@@ -49,6 +49,8 @@
                     <TextBlock Text="Scenes" FontSize="16" FontWeight="Bold" Margin="0,0,0,12"/>
                     <TextBlock Text="Select a scene from the tree:" Margin="0,0,0,8"/>
                 </StackPanel>
+                <Button DockPanel.Dock="Top" Content="WPF Multi-Panel Stress (Picking / GL-Kontexte) ..."
+                        Margin="8,0,8,4" Padding="6,3" Click="openStressWindow_Click"/>
                 <ListBox x:Name="listScenes" ItemsSource="{Binding Source={x:Static ilntests:ScenesCollection.Instance}, Path=Scenes}"
                         DisplayMemberPath="Key"
                         SelectedValuePath="Value"
