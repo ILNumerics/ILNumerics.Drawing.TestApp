@@ -46,7 +46,7 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
 #if NETFRAMEWORK
             var fwvers = "net461"; 
 #else 
-            var fwvers = "net8.0-windows";
+            var fwvers = "net10.0-windows";
 #endif
             // text rendering info
             var gdiText = GDIDriver.IsGDIPlusSupported ? "Text: GDI+" : "Text: SkiaSharp"; 
@@ -83,6 +83,10 @@ namespace ILNumerics.VisualDrawingTestApp.Windows {
                 refreshPanels(sceneFactory); 
 
             }
+        }
+
+        private void openStressWindow_Click(object sender, RoutedEventArgs e) {
+            new OpenGLMultiPanelStressWindow() { Owner = this }.Show();
         }
 
         //private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {

@@ -1,0 +1,32 @@
+<Window x:Class="ILNumerics.VisualDrawingTestApp.Windows.OpenGLMultiPanelStressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OpenGL Multi-Panel Stress (WPF / WinForms, context / picking)" Height="760" Width="1300">
+    <DockPanel>
+        <!-- controls -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="6">
+            <TextBlock Text="Neue Panels:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <ComboBox x:Name="cmbKind" Width="110" Margin="0,0,10,0" SelectedIndex="0">
+                <ComboBoxItem Content="gemischt"/>
+                <ComboBoxItem Content="nur WPF"/>
+                <ComboBoxItem Content="nur WinForms"/>
+            </ComboBox>
+            <Button x:Name="btnAdd" Content="Panel öffnen" Margin="0,0,6,0" Padding="8,2" Click="btnAdd_Click"/>
+            <Button x:Name="btnClose" Content="Panel schließen" Margin="0,0,6,0" Padding="8,2" Click="btnClose_Click"/>
+            <Button x:Name="btnSwap" Content="Szenen tauschen" Margin="0,0,6,0" Padding="8,2" Click="btnSwap_Click"/>
+            <Button x:Name="btnResize" Content="Größe ändern" Margin="0,0,6,0" Padding="8,2" Click="btnResize_Click"/>
+            <Button x:Name="btnPick" Content="Picking-Runde" Margin="0,0,6,0" Padding="8,2" Click="btnPick_Click"/>
+            <Separator Margin="6,0"/>
+            <ToggleButton x:Name="btnAuto" Content="Auto-Stress" Margin="0,0,6,0" Padding="8,2" Checked="btnAuto_Checked" Unchecked="btnAuto_Unchecked"/>
+            <Button x:Name="btnReset" Content="Zähler zurücksetzen" Margin="0,0,6,0" Padding="8,2" Click="btnReset_Click"/>
+        </StackPanel>
+        <TextBlock DockPanel.Dock="Top" Margin="6,0,6,2" TextWrapping="Wrap" Foreground="#FF555555"
+                   Text="Repro (WPF- und WinForms-OpenGL-Panels, [W]/[F] im Namen): Maus abwechselnd über die Panels bewegen, dabei Panels schließen/öffnen, Szenen tauschen, Größe ändern. Das Label 'center' färbt sich beim Hover rot. Auto-Stress macht dasselbe zufällig und ruft PickAt() direkt auf. Erwartet: kein Absturz (nvoglv64.dll), 'center falsch' = 0, 'Exceptions' = 0."/>
+        <TextBlock x:Name="txtStatus" DockPanel.Dock="Top" Margin="6,2" FontFamily="Consolas" FontWeight="Bold"/>
+        <TextBlock x:Name="txtHover" DockPanel.Dock="Top" Margin="6,0,6,4" FontFamily="Consolas"/>
+        <!-- log of failures -->
+        <ListBox x:Name="lstLog" DockPanel.Dock="Bottom" Height="120" Margin="6" FontFamily="Consolas" FontSize="11"/>
+        <!-- OpenGL panels -->
+        <UniformGrid x:Name="panelHost" Columns="3" Margin="6,0"/>
+    </DockPanel>
+</Window>

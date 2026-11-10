@@ -2,15 +2,22 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <UseWinForms>true</UseWinForms>
+    <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>12</LangVersion>
     <StartupObject>ILNumerics.VisualDrawingTestApp.Windows.App</StartupObject>
     <Configurations>Debug;Release;ProjectReferences_DEBUG;ProjectReferences_Release;Accelerator_Debug_FastBuild;Packages_Debug;Packages_Release</Configurations>
   </PropertyGroup>
+
+  <!-- UseWindowsForms is required for WindowsFormsHost (WindowsFormsIntegration). Its implicit global usings
+       would make WPF types ambiguous (Application, Panel, Label, Color, ...): WinForms types are referenced explicitly. -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework)=='net461'">
     <Reference Include="System.Windows.Forms" />
@@ -18,12 +25,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="!$(Configuration.StartsWith('ProjectReferences'))">
-    <PackageReference Include="ILNumerics.Computing" Version="7.4.40" />
-    <PackageReference Include="ILNumerics.Drawing.Platforms" Version="7.4.40" />
-    <PackageReference Include="ILNumerics.Toolboxes.Drawing2" Version="7.4.40" />
-    <PackageReference Include="ILNumerics.Toolboxes.Interpolation" Version="7.4.40" />
-    <PackageReference Include="ILNumerics.Toolboxes.Optimization" Version="7.4.40" />
-    <PackageReference Include="ILNumerics.Toolboxes.Statistics" Version="7.4.40" />
+    <PackageReference Include="ILNumerics.Computing" Version="7.4.83" />
+    <PackageReference Include="ILNumerics.Drawing.Platforms" Version="7.4.83" />
+    <PackageReference Include="ILNumerics.Toolboxes.Drawing2" Version="7.4.83" />
+    <PackageReference Include="ILNumerics.Toolboxes.Interpolation" Version="7.4.83" />
+    <PackageReference Include="ILNumerics.Toolboxes.Optimization" Version="7.4.83" />
+    <PackageReference Include="ILNumerics.Toolboxes.Statistics" Version="7.4.83" />
   </ItemGroup>
 
   <ItemGroup Condition="$(Configuration.StartsWith('ProjectReferences'))">
