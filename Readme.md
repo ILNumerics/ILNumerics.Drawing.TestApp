@@ -55,6 +55,16 @@ cd ILNumerics.Drawing.TestApp\src
 dotnet run
 ```
 
+### Run against local ILNumerics module builds
+
+By default, the app uses the ILNumerics NuGet packages. To build and run it against local ILNumerics module projects instead, provide the root folder of the local modules tree (the folder containing `ILNumerics.Core`, `ILNumerics.Drawing`, `ILNumerics.Drawing.Platforms`, `ILNumerics.Toolboxes`, ...):
+
+```bash
+dotnet run -c Debug /p:ModulesBasePath='C:\path_to\Version6'
+```
+
+The module projects are built as part of the app build, in the same configuration. `/p:UseLocalModules=true|false` overrides the selection explicitly.
+
 ### License 
 MIT
 

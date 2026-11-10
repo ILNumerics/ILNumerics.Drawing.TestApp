@@ -24,7 +24,31 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
 
-  <ItemGroup Condition="!$(Configuration.StartsWith('ProjectReferences'))">
+  <!--
+    Source of the ILNumerics modules:
+    * NuGet packages (default).
+    * Local ILNumerics module projects (ProjectReference), when the root folder of a local modules tree is given
+      (the folder containing ILNumerics.Core, ILNumerics.Drawing, ILNumerics.Drawing.Platforms, ILNumerics.Toolboxes, ...):
+          dotnet build -c Debug /p:ModulesBasePath='C:\path_to\Version6'
+          dotnet run   -c Debug /p:ModulesBasePath='C:\path_to\Version6'
+      'ProjectReferences*' configurations use local module projects, too. Without ModulesBasePath they expect the
+      app to be located inside the modules tree (ModulesBasePath = ..\..\..\, as before).
+    * /p:UseLocalModules=true|false overrides the decision.
+  -->
+  <PropertyGroup>
+    <_ILNModulesBasePathGiven Condition="'$(ModulesBasePath)' != ''">true</_ILNModulesBasePathGiven>
+    <!-- ModulesBasePath is a global (read-only) property when given on the command line: normalize into _ILNModulesRoot.
+         Remove quotes possibly passed literally (/p:ModulesBasePath='C:\...'). -->
+    <_ILNModulesRoot>$(ModulesBasePath.Replace(`'`, ``).Replace(`"`, ``).Trim())</_ILNModulesRoot>
+    <_ILNModulesRoot Condition="'$(_ILNModulesRoot)' == ''">$(MSBuildThisFileDirectory)..\..\..\</_ILNModulesRoot>
+    <_ILNModulesRoot>$([MSBuild]::EnsureTrailingSlash('$([System.IO.Path]::GetFullPath('$(_ILNModulesRoot)'))'))</_ILNModulesRoot>
+
+    <UseLocalModules Condition="'$(UseLocalModules)' == '' And '$(_ILNModulesBasePathGiven)' == 'true'">true</UseLocalModules>
+    <UseLocalModules Condition="'$(UseLocalModules)' == '' And $(Configuration.StartsWith('ProjectReferences'))">true</UseLocalModules>
+    <UseLocalModules Condition="'$(UseLocalModules)' == ''">false</UseLocalModules>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseLocalModules)' != 'true'">
     <PackageReference Include="ILNumerics.Computing" Version="7.4.83" />
     <PackageReference Include="ILNumerics.Drawing.Platforms" Version="7.4.83" />
     <PackageReference Include="ILNumerics.Toolboxes.Drawing2" Version="7.4.83" />
@@ -33,13 +57,20 @@
     <PackageReference Include="ILNumerics.Toolboxes.Statistics" Version="7.4.83" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(Configuration.StartsWith('ProjectReferences'))">
-    <ProjectReference Include="..\..\..\ILNumerics.Drawing\src\ILNumerics.Drawing.csproj" />
-    <ProjectReference Include="..\..\..\ILNumerics.Core\src\ILNumerics.Core.csproj" />
-    <ProjectReference Include="..\..\src\ILNumerics.Drawing.Platforms.csproj" />
-    <ProjectReference Include="..\..\..\ILNumerics.Toolboxes\ILNumerics.Toolboxes.Drawing2\src\ILNumerics.Toolboxes.Drawing2.csproj" />
-    <ProjectReference Include="..\..\..\ILNumerics.Toolboxes\ILNumerics.Toolboxes.Interpolation\src\ILNumerics.Toolboxes.Interpolation.csproj" />
-    <ProjectReference Include="..\..\..\ILNumerics.Toolboxes\ILNumerics.Toolboxes.Statistics\src\ILNumerics.Toolboxes.Statistics.csproj" />
+  <ItemGroup Condition="'$(UseLocalModules)' == 'true'">
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Core\src\ILNumerics.Core.csproj" />
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Drawing\src\ILNumerics.Drawing.csproj" />
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Drawing.Platforms\src\ILNumerics.Drawing.Platforms.csproj" />
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Toolboxes\ILNumerics.Toolboxes.Drawing2\src\ILNumerics.Toolboxes.Drawing2.csproj" />
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Toolboxes\ILNumerics.Toolboxes.Interpolation\src\ILNumerics.Toolboxes.Interpolation.csproj" />
+    <ILNLocalModule Include="$(_ILNModulesRoot)ILNumerics.Toolboxes\ILNumerics.Toolboxes.Statistics\src\ILNumerics.Toolboxes.Statistics.csproj" />
+    <ProjectReference Include="@(ILNLocalModule)" />
   </ItemGroup>
+
+  <Target Name="ILNCheckLocalModules" BeforeTargets="CollectPackageReferences;ResolveProjectReferences;Build" Condition="'$(UseLocalModules)' == 'true'">
+    <Error Condition="!Exists('%(ILNLocalModule.Identity)')"
+           Text="ILNumerics module project not found: '%(ILNLocalModule.Identity)'. Set ModulesBasePath to the root of a local ILNumerics modules tree (the folder containing ILNumerics.Core, ILNumerics.Drawing, ...), e.g.: /p:ModulesBasePath='C:\path_to\Version6'. Current: '$(_ILNModulesRoot)'." />
+    <Message Importance="high" Text="ILNumerics modules: local projects from '$(_ILNModulesRoot)'" />
+  </Target>
 
 </Project>
